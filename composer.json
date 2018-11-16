@@ -1,6 +1,5 @@
 {
     "name": "zingle/zi-agent",
-    "version": "0.0.1",
     "description": "Zingle infrastructure agent",
     "type": "library",
     "license": "MIT",
