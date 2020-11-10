@@ -24,12 +24,12 @@ class Agent
      * Configure agent credentials.
      *
      * @param string $user
-     * @param string $keyData
+     * @param RSA    $key
      */
-    public function __construct(string $user, string $keyData)
+    public function __construct(string $user, RSA $key)
     {
         $this->user = $user;
-        $this->setKey($keyData);
+        $this->key  = $key;
     }
 
     /**
@@ -50,14 +50,5 @@ class Agent
     public function getKey(): RSA
     {
         return $this->key;
-    }
-
-    /**
-     * @param string $keyData
-     */
-    private function setKey(string $keyData): void
-    {
-        $this->key = new RSA();
-        $this->key->loadKey($keyData);
     }
 }

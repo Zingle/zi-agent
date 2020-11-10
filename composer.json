@@ -16,7 +16,8 @@
     "require-dev": {
         "php-coveralls/php-coveralls": "^2.4",
         "zingle-com/php-coding-standard": "^0.0.1",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5",
+        "phpstan/phpstan": "^0.12.54"
     },
     "autoload": {
         "psr-4": {
@@ -27,9 +28,11 @@
     "scripts": {
         "test": "./vendor/bin/phpunit",
         "test-no-coverage": "@test --no-coverage",
-        "check-standards": "./vendor/bin/phpcs -p",
+        "test-standards": "./vendor/bin/phpcs -p",
+        "test-static": "./vendor/bin/phpstan analyse",
         "test-all": [
-            "@check-standards",
+            "@test-standards",
+            "@test-static",
             "@test"
         ]
     }

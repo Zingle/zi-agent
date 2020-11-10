@@ -9,7 +9,7 @@ use RuntimeException;
 /**
  * Connection to host in Zingle infrastructure.
  */
-class Connection
+class Connection implements ConnectionInterface
 {
     /**
      * @var string
@@ -22,7 +22,7 @@ class Connection
     private $agent;
 
     /**
-     * @var SSH2
+     * @var SSH2|null
      */
     private $ssh;
 
@@ -108,7 +108,7 @@ class Connection
             }
 
             $output = $this->ssh->exec($cmd);
-            $exit   = $this->ssh->getExitStatus();
+            $exit   = (int) $this->ssh->getExitStatus();
 
             return new Result($cmd, $exit, $output);
         } finally {
