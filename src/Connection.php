@@ -22,7 +22,7 @@ class Connection implements ConnectionInterface
     private $agent;
 
     /**
-     * @var SSH2
+     * @var SSH2|null
      */
     private $ssh;
 
@@ -108,7 +108,7 @@ class Connection implements ConnectionInterface
             }
 
             $output = $this->ssh->exec($cmd);
-            $exit   = $this->ssh->getExitStatus();
+            $exit   = (int) $this->ssh->getExitStatus();
 
             return new Result($cmd, $exit, $output);
         } finally {
