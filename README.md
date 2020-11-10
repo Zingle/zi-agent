@@ -18,7 +18,8 @@ Usage
 use Zingle\Infrastructure\Agent;
 use Zingle\Infrastructure\Connection;
 
-$agent = new Agent("foo-user", "-----BEGIN RSA PRIVATE KEY-----\nmTJJCjZ...")
+$key = new \phpseclib\Crypt\RSA("-----BEGIN RSA PRIVATE KEY-----\nmTJJCjZ...");
+$agent = new Agent("foo-user", $key);
 $connection = new Connection("example.com", $agent);
 $result = $connection->execute("my-command");
 
