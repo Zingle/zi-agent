@@ -1,6 +1,9 @@
 zi-agent Library
 ================
 
+[![Build Status](https://travis-ci.com/Zingle/zi-agent.svg?branch=master)](https://travis-ci.com/Zingle/zi-agent)
+[![Coverage Status](https://coveralls.io/repos/github/Zingle/zi-agent/badge.svg?branch=add_coding_standards)](https://coveralls.io/github/Zingle/zi-agent?branch=add_coding_standards)
+
 Installation
 ------------
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace Zingle\Infrastructure;
+
 use phpseclib\Net\SSH2;
 use LogicException;
 use RuntimeException;
@@ -8,28 +9,41 @@ use RuntimeException;
 /**
  * Connection to host in Zingle infrastructure.
  */
-class Connection {
-    /** @var string */
-    protected $host;
+class Connection
+{
+    /**
+     * @var string
+     */
+    private $host;
 
-    /** @var Agent */
-    protected $agent;
+    /**
+     * @var Agent
+     */
+    private $agent;
 
-    /** @var SSH2 */
-    protected $ssh;
+    /**
+     * @var SSH2
+     */
+    private $ssh;
+
 
     /**
      * Create connection to host.
+     *
+     * @param string $host
+     * @param Agent  $agent
      */
-    public function __construct(string $host, Agent $agent) {
-        $this->host = $host;
+    public function __construct(string $host, Agent $agent)
+    {
+        $this->host  = $host;
         $this->agent = $agent;
     }
 
     /**
      * Open the connection.
      */
-    public function open(): void {
+    public function open(): void
+    {
         if ($this->ssh) {
             throw new LogicException("connection already open");
         }
@@ -47,11 +61,24 @@ class Connection {
     }
 
     /**
+     * @param SSH2 $ssh
+     *
+     * @return $this
+     */
+    public function useSsh(SSH2 $ssh): self
+    {
+        $this->ssh = $ssh;
+
+        return $this;
+    }
+
+    /**
      * Close the connection.
      */
-    public function close(): void {
+    public function close(): void
+    {
         if (!$this->ssh) {
-            throw new LogicException("connection not open");
+            return; // it's already closed
         }
 
         $this->ssh->disconnect();
@@ -59,46 +86,49 @@ class Connection {
     }
 
     /**
-     * Return true if the connection is open.
+     * @return bool true if the connection is open.
      */
-    public function isOpen(): bool {
-        return (bool)$this->ssh;
+    public function isOpen(): bool
+    {
+        return isset($this->ssh);
     }
 
     /**
      * Execute command.
+     *
+     * @param string $cmd
+     *
+     * @return Result
      */
-    public function execute(string $cmd): Result {
+    public function execute(string $cmd): Result
+    {
         try {
-            $close = false;
-
             if (!$this->isOpen()) {
                 $this->open();
-                $close = true;
             }
 
             $output = $this->ssh->exec($cmd);
-            $exit = $this->ssh->getExitStatus();
+            $exit   = $this->ssh->getExitStatus();
 
             return new Result($cmd, $exit, $output);
         } finally {
-            if ($close) {
-                $this->close();
-            }
+            $this->close();
         }
     }
 
     /**
-     * Return the user agent for the connection.
+     * @return Agent the user agent for the connection.
      */
-    public function getAgent(): Agent {
+    public function getAgent(): Agent
+    {
         return $this->agent;
     }
 
     /**
-     * Return the host used by this connection.
+     * @return string the host used by this connection.
      */
-    public function getHost(): string {
+    public function getHost(): string
+    {
         return $this->host;
     }
 }
