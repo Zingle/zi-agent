@@ -2,7 +2,6 @@
 
 namespace Zingle\Infrastructure;
 
-
 /**
  * Connection to host in Zingle infrastructure.
  */
