@@ -9,7 +9,7 @@ use RuntimeException;
 /**
  * Connection to host in Zingle infrastructure.
  */
-class Connection
+class Connection implements ConnectionInterface
 {
     /**
      * @var string
