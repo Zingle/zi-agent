@@ -10,13 +10,15 @@
         }
     ],
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "phpseclib/phpseclib": "^2.0",
-        "zingle-com/php-coding-standard": "^0.0.1"
+        "zingle-com/php-coding-standard": "^0.0.1",
+        "phpunit/phpunit": "^9.4"
     },
     "autoload": {
         "psr-4": {
-            "Zingle\\": "src/Zingle"
+            "Zingle\\Infrastructure\\": "src/",
+            "Zingle\\Infrastructure\\Test\\": "tests/"
         }
     },
     "scripts": {
